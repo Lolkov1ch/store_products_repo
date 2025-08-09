@@ -39,13 +39,11 @@ class Store:
         self.conn.commit()
     
     def insert_simple_data(self):
-        # Продукт 1
         self.cursor.execute(
             "INSERT INTO products (name, category, price) VALUES (?, ?, ?)",
             ('iPhone 13', 'Смартфони', 799.99)
         )
 
-        # Клієнт 1
         self.cursor.execute("SELECT * FROM customers WHERE email = ?", ("oleg@example.com",))
         if not self.cursor.fetchone():
             self.cursor.execute(
@@ -53,19 +51,15 @@ class Store:
                 ("Олег", "Петренко", "oleg@example.com")
             )
 
-        # Замовлення 1
         self.cursor.execute(
             "INSERT INTO orders (customer_id, product_id, quantity, order_date) VALUES (?, ?, ?, ?)",
             (1, 1, 2, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
 
-        # Продукт 2
         self.cursor.execute(
             "INSERT INTO products (name, category, price) VALUES (?, ?, ?)",
             ("Samsung Galaxy S21", "Смартфони", 699.99)
         )
-
-        # Клієнт 2
         self.cursor.execute("SELECT * FROM customers WHERE email = ?", ("maria@example.com",))
         if not self.cursor.fetchone():
             self.cursor.execute(
@@ -73,7 +67,6 @@ class Store:
                 ("Марія", "Іванова", "maria@example.com")
             )
 
-        # Замовлення 2
         self.cursor.execute(
             "INSERT INTO orders (customer_id, product_id, quantity, order_date) VALUES (?, ?, ?, ?)",
             (2, 2, 1, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -144,7 +137,6 @@ class Store:
             print(f"Категорія: {category}, Кількість продуктів: {count}")
     
     def update_smartphone_price(self, product_id=None, new_price=None):
-        # Якщо product_id не переданий — оновлюємо всі смартфони
         if product_id and new_price:
             self.cursor.execute(
                 "UPDATE products SET price = ? WHERE product_id = ? AND category = 'Смартфони';",
